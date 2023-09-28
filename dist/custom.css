@@ -1,0 +1,15 @@
+li > code {
+    color: #d33682;
+}
+
+li > p > code {
+    color: #d33682;
+}
+
+h4 > code {
+    color: #d33682;
+}
+
+.transparent {
+    opacity: 50%;
+}

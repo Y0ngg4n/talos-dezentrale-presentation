@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="dist/reset.css">
     <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/custom.css">
     <link rel="stylesheet" href="dist/theme/black.css">
 
     <!-- Theme used for syntax highlighted code -->
@@ -19,160 +20,192 @@
         <section data-background-image="images/background.png">
             <h1>Talos Linux</h1>
             <img src="images/TalosLogo.png">
-            <h5>The Kubernetes Operating System</h5>
+            <h5>Einfache K8s Installationen</h5>
         </section>
-        <section data-markdown data-background-image="images/background.png">
-            <textarea data-template>
-                #### Wat'n dat? 🤔
-                - Ein Kubernetes Betriebssystem ähnlich zu CoreOS/FlatCar
-                - Wird von SideroLabs entwickelt
-                - SideroLabs bietet es als SaaS an
-                - Hat nur das nötigste installiert
-                - Bietet eine einfache Art K8s zu installieren und zu verwalten
-            </textarea>
+        <section data-background-image="images/background.png">
+            <h4>Wat'n dat? 🤔</h4>
+            <ul>
+                <li class="fragment fade-in-then-semi-out">Ein Kubernetes Betriebssystem ähnlich zu CoreOS/FlatCar</li>
+                <li class="fragment fade-in-then-semi-out">Wird von SideroLabs entwickelt</li>
+                <li class="fragment fade-in-then-semi-out">SideroLabs bietet es als SaaS an</li>
+                <li class="fragment fade-in-then-semi-out">Hat nur das nötigste installiert</li>
+                <li class="fragment fade-in-then-semi-out">Bietet eine einfache Art K8s zu installieren und zu verwalten</li>
+            </ul>
         </section>
-        <section data-markdown data-background-image="images/background.png">
-            <textarea data-template>
-                #### Ok und was kann das?
-                - Volles K8s
-                - Läuft komplett im RAM → Fast unkaputtbar
-                - Keine Shell und kein SSH
-                - Überall TLS
-                - Einfaches CLI Tool zum verwalten des ganzen Clusters
-                - Konfiguration per YAML Datei
-                - Neuerdings: CSI Support
-                - Einfache etcd Backups/Recovery
-                - Einfache Kubernetes Updates
-            </textarea>
+        <section data-background-image="images/background.png">
+            <h4>Ok und was kann das?</h4>
+            <ul>
+                <li class="fragment fade-in-then-semi-out">Volles K8s</li>
+                <li class="fragment fade-in-then-semi-out">Läuft komplett im RAM (SquashFS)</li>
+                <li class="fragment fade-in-then-semi-out">Keine Shell und kein SSH</li>
+                <li class="fragment fade-in-then-semi-out">Überall TLS</li>
+                <li class="fragment fade-in-then-semi-out">Einfaches CLI Tool zum verwalten des ganzen clusters</li>
+                <li class="fragment fade-in-then-semi-out">Konfiguration per YAML Datei</li>
+                <li class="fragment fade-in-then-semi-out">Einfache etcd Backups/Recovery</li>
+                <li class="fragment fade-in-then-semi-out">Einfache Kubernetes Updates</li>
+            </ul>
         </section>
-        <section data-markdown data-background-image="images/background.png">
-            <textarea data-template>
-                #### Aha und warum nicht einfach `K3s`?
-                - `K3s` läuft mit sqlite oder einer externen Datenbank
-                - `Talos` benutzt eine replizierte etcd Datenbank für den Cluster State
-                - `K3s` ist eingeschränkt im Funktionsumfang
-            </textarea>
+        <section data-background-image="images/background.png">
+            <h4>Aha und warum nicht einfach <code>K3s</code>?</h4>
+            <ul>
+                <li class="fragment fade-in-then-semi-out"><code>K3s</code> läuft mit <code>SQLite</code> oder einer externen Datenbank (<code>Postgresql</code> z.Bsp.)</li>
+                <li class="fragment fade-in-then-semi-out"><code>Talos</code> benutzt eine replizierte etcd Datenbank für den Cluster-State</li>
+                <li class="fragment fade-in-then-semi-out"><code>K3s</code> ist eingeschränkter im Funktionsumfang</li>
+            </ul>
         </section>
         <section data-background-image="images/background.png">
             <h4>Und wie installier ich das?</h4>
             <ol>
-                <li><code>Talosctl</code> runterladen:</li>
-                <li><p>ISO runterladen:</p>
-                    <a href="https://github.com/siderolabs/talos/releases">https://github.com/siderolabs/talos/releases</a>
+                <li class="fragment fade-in-then-semi-out"><code>talosctl</code> runterladen:
+                    <pre><code>curl -sL https://talos.dev/install | sh</code></pre>
+                </li>
+                <li class="fragment fade-in-then-semi-out"><p>ISO herunterladen:</p>
+                    <a href="https://github.com/siderolabs/talos/releases">https://github.com/siderolabs/talos/releases (metal)</a>
                     <hr>
                     Alternativ mit
                     <pre><code>talosctl cluster create</code></pre>
-                    lokalen Test-Cluster erstellen (Dann bis Schritt 10 springen)
+                    lokalen Test-Cluster erstellen (→ Schritt 10 springen)
                 </li>
-                <li>Server mit ISO booten</li>
+                <li class="fragment fade-in-then-semi-out">Server mit ISO booten</li>
             </ol>
         </section>
         <section data-background-image="images/background.png">
             <h4>Und wie installier ich das?</h4>
+            <img src="images/TalosMaintenance.png">
+        </section>
+        <section data-background-image="images/background.png">
+            <h4>Und wie installier ich das?</h4>
+            <img src="images/TalosNetworkConfig.png">
+        </section>
+        <section data-background-image="images/background.png">
+            <h4>Und wie installier ich das?</h4>
             <ol start="4">
-                <li><p>Config generieren:</p>
-                    <pre><code>talosctl gen config my-name https://$CONTROL_PLANE_IP:6443 --output-dir _out
-                    </code></pre>
+                <li class="fragment">
+                    <p>Config generieren:</p>
+                    <pre>
+                        <code data-line-numbers="1|2|3|4">talosctl gen config
+my-name
+https://$CONTROL_PLANE_IP:6443
+--output-dir _out</code>
+                    </pre>
                 </li>
-                <li>
+                <li class="fragment fade-in-then-semi-out">
                     <p><code>_out/worker.yaml</code> und <code>_out/controllplane.yaml</code> configs bearbeiten </p>
                     <a href="https://www.talos.dev/v1.5/talos-guides/configuration/">https://www.talos.dev/v1.5/talos-guides/configuration/</a>
                 </li>
             </ol>
         </section>
-        <section data-background-image="images/background.png">
+        <section data-transition="slide-in" data-background-image="images/background.png">
             <h4>Und wie installiere ich das?</h4>
             <ol start="6">
                 <li><p>Controllplane installieren:</p>
-                    <pre><code>talosctl apply-config --insecure
-                --nodes $CONTROL_PLANE_IP
-                --file _out/controlplane.yaml</code></pre>
+                    <pre><code data-line-numbers="1|2|3">talosctl apply-config --insecure
+--nodes $CONTROL_PLANE_IP
+--file _out/controlplane.yaml</code></pre>
                 </li>
-                <li><p>Worker installieren:</p>
+            </ol>
+        </section>
+        <section data-transition="none" data-background-image="images/background.png">
+            <h4>Und wie installiere ich das?</h4>
+            <ol start="6">
+                <li class="transparent"><p>Controllplane installieren:</p>
                     <pre><code>talosctl apply-config --insecure
-                --nodes $WORKER_IP --file _out/worker.yaml</code></pre>
+--nodes $CONTROL_PLANE_IP
+--file _out/controlplane.yaml</code></pre>
+                </li>
+                <li class="fragment"><p>Worker installieren:</p>
+                    <pre><code data-line-numbers="1|2|3">talosctl apply-config --insecure
+--nodes $WORKER_IP
+--file _out/worker.yaml</code></pre>
                 </li>
             </ol>
         </section>
         <section data-background-image="images/background.png">
             <h4>Und wie installier ich das?</h4>
+            <img src="images/Installing.png">
+        </section>
+        <section data-background-image="images/background.png">
+            <h4>Und wie installier ich das?</h4>
+            <img src="images/Bootstrap.png">
+        </section>
+        <section data-transition="slide-in" data-background-image="images/background.png">
+            <h4>Und wie installier ich das?</h4>
             <ol start="8">
                 <li><p>In der Talos config die IP der Controllplane setzen:</p>
-                    <pre><code>export TALOSCONFIG="_out/talosconfig"
-                talosctl config endpoint $CONTROL_PLANE_IP
-                talosctl config node $CONTROL_PLANE_IP</code></pre>
+                    <pre><code data-line-numbers="1|2|3">export TALOSCONFIG="_out/talosconfig"
+talosctl config endpoint $CONTROL_PLANE_IP
+talosctl config node $CONTROL_PLANE_IP</code></pre>
                 </li>
-                <li><p>etcd bootstrap:</p><pre><code>talosctl bootstrap</code></pre></li>
-                <li><p>kubeconfig holen:</p><pre><code>talosctl kubeconfig .</code></pre></li>
             </ol>
-            <h5>Fertig 🥳</h5>
         </section>
-        <section data-markdown data-background-image="images/background.png">
-            <pre><code></code></pre>
-            <textarea data-template>
-                #### Aha und was mach ich jetzt damit?
-                ###### Healthcheck
-                ```
-                talosctl health
-                ```
-                ###### Dashboard
-                ```
-                talosctl dashboard
-                ```
-                ###### etcd Backups (Nicht vergessen!):
-                ```
-                talosctl -n $CONTROL_PLANE_IP
-                etcd snapshot db.snapshot
-                ```
-                ```
-                talosctl -n $CONTROL_PLANE_IP bootstrap
-                --recover-from=./db.snapshot
-                ```
-            </textarea>
+        <section data-transition="none" data-background-image="images/background.png">
+            <h4>Und wie installier ich das?</h4>
+            <ol start="8">
+                <li class="transparent"><p>In der Talos config die IP der Controllplane setzen:</p>
+                    <pre><code>export TALOSCONFIG="_out/talosconfig"
+talosctl config endpoint $CONTROL_PLANE_IP
+talosctl config node $CONTROL_PLANE_IP</code></pre>
+                </li>
+                <li class="fragment fade-in-then-semi-out"><p><code>etcd</code> bootstrap:</p>
+                    <pre><code>talosctl bootstrap</code></pre>
+                </li>
+                <li class="fragment fade-in-then-semi-out"><p><code>kubeconfig</code> speichern:</p>
+                    <pre><code>talosctl kubeconfig .</code></pre>
+                </li>
+            </ol>
+            <h5 class="fragment fade-in-then-semi-out">Fertig 🥳</h5>
         </section>
-        <section data-markdown data-background-image="images/background.png">
-            <textarea data-template>
-                #### Aha und was mach ich jetzt damit?
-                ###### Kubernetes Updates
-                ```
-                talosctl --nodes $CONTROL_PLANE_IP
-                upgrade-k8s --to 1.28.2
-                ```
-                ###### Talos Updates
-                ```
-                talosctl upgrade --nodes NODE_IP_1,NODE_IP_2
-                      --image ghcr.io/siderolabs/installer:v1.5.0
-                ```
-            </textarea>
+        <section data-background-image="images/background.png">
+            <h5>Healthcheck</h5>
+            <pre><code>talosctl health</code></pre>
+            <img height="500" src="images/Health.png">
         </section>
-        <section data-markdown data-background-image="images/background.png">
-            <textarea data-template>
-                ### Und diese kubeconfig was mach ich damit?
-                `kubectl` installieren, dann:
-                ```
-                export KUBECONFIG=./kubeconfig
-                ```
-                Nodes auflisten:
-                ```
-                kubectl get nodes
-                ```
-                Alle Pods anzeigen:
-                ```
-                kubectl get pods -A
-                ```
-            </textarea>
+        <section data-background-image="images/background.png">
+            <h5>Dashboard</h5>
+            <pre><code>talosctl dashboard</code></pre>
+            <img height="500" src="images/Dashboard.png">
         </section>
-        <section data-markdown data-background-image="images/background.png">
-            <textarea data-template>
-                #### Danke für eure Aufmerksamheit 😊
-                Proxmox Installationsanleitung (https://www.talos.dev/v1.5/talos-guides/install/virtualized-platforms/proxmox/)
-                FluxCD Empfehlung: https://fluxcd.io/
-                <br/><br/>
-                ##### Fediverse:
-                [@Yonggan@firefish.place](https://firefish.place/@Yonggan)
-                ##### Matrix:
-                [yonggan@matrixapp.chat](https://matrix.to/#/@yonggan:matrixapp.chat)
-            </textarea>
+        <section data-background-image="images/background.png">
+            <h5>etcd Backups (Nicht vergessen!)</h5>
+            <pre><code>talosctl -n $CONTROL_PLANE_IP etcd snapshot db.snapshot
+
+talosctl -n $CONTROL_PLANE_IP bootstrap
+--recover-from=./db.snapshot</code></pre>
+            <img src="images/etcd-snapshot.png">
+        </section>
+        <section data-background-image="images/background.png">
+            <h5>Kubernetes Updates</h5>
+            <pre><code>talosctl --nodes $CONTROL_PLANE_IP
+upgrade-k8s --to 1.28.2</code></pre>
+        </section>
+        <section data-background-image="images/background.png">
+            <h5>Talos Updates</h5>
+            <pre><code>talosctl upgrade --nodes NODE_IP_1,NODE_IP_2
+--image ghcr.io/siderolabs/installer:v1.5.0</code></pre>
+        </section>
+        <section data-background-image="images/background.png">
+            <h4>Danke für eure Aufmerksamheit 😊</h4>
+            <table>
+                <tbody>
+                <tr>
+                    <td>Proxmox Installationsanleitung</td>
+                    <td><a href="https://www.talos.dev/v1.5/talos-guides/install/virtualized-platforms/proxmox/">https://www.talos.dev/v1.5/talos-guides/install/virtualized-platforms/proxmox/</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>FluxCD Empfehlung</td>
+                    <td><a href="https://fluxcd.io/">https://fluxcd.io/</a></td>
+                </tr>
+                <tr>
+                    <td>Fediverse</td>
+                    <td><a href="https://firefish.place/@Yonggan">@Yonggan@firefish.place</a></td>
+                </tr>
+                <tr>
+                    <td>Matrix</td>
+                    <td><a href="https://matrix.to/#/@yonggan:matrixapp.chat">@yonggan:matrixapp.chat</a></td>
+                </tr>
+                </tbody>
+            </table>
         </section>
     </div>
 </div>
