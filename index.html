@@ -42,7 +42,7 @@
                 <li class="fragment fade-in-then-semi-out">Immutable (Read-only Filesystem)</li>
                 <li class="fragment fade-in-then-semi-out">Einfaches CLI Tool zum verwalten des ganzen clusters</li>
                 <li class="fragment fade-in-then-semi-out">Konfiguration per YAML Datei</li>
-                <li class="fragment fade-in-then-semi-out">Einfache etcd Backups/Recovery</li>
+                <li class="fragment fade-in-then-semi-out">Einfache <code>etcd</code> Backups/Recovery</li>
                 <li class="fragment fade-in-then-semi-out">Einfache Kubernetes Updates</li>
             </ul>
         </section>
@@ -50,7 +50,7 @@
             <h4>Aha und warum nicht einfach <code>K3s</code>?</h4>
             <ul>
                 <li class="fragment fade-in-then-semi-out"><code>K3s</code> läuft mit <code>SQLite</code> oder einer externen Datenbank (<code>Postgresql</code> z.Bsp.)</li>
-                <li class="fragment fade-in-then-semi-out"><code>Talos</code> benutzt eine replizierte etcd Datenbank für den Cluster-State</li>
+                <li class="fragment fade-in-then-semi-out"><code>Talos</code> benutzt eine replizierte <code>etcd</code> Datenbank für den Cluster-State</li>
                 <li class="fragment fade-in-then-semi-out"><code>K3s</code> ist eingeschränkter im Funktionsumfang</li>
             </ul>
         </section>
@@ -61,7 +61,7 @@
                     <pre><code>curl -sL https://talos.dev/install | sh</code></pre>
                 </li>
                 <li class="fragment fade-in-then-semi-out"><p>ISO herunterladen:</p>
-                    <a href="https://github.com/siderolabs/talos/releases">https://github.com/siderolabs/talos/releases (metal)</a>
+                    <a href="https://github.com/siderolabs/talos/releases">👁️ https://github.com/siderolabs/talos/releases (metal)</a>
                     <hr>
                     Alternativ mit
                     <pre><code>talosctl cluster create</code></pre>
@@ -92,7 +92,7 @@ https://$CONTROL_PLANE_IP:6443
                 </li>
                 <li class="fragment fade-in-then-semi-out">
                     <p><code>_out/worker.yaml</code> und <code>_out/controllplane.yaml</code> configs bearbeiten </p>
-                    <a href="https://www.talos.dev/v1.5/talos-guides/configuration/">https://www.talos.dev/v1.5/talos-guides/configuration/</a>
+                    <a href="https://www.talos.dev/v1.5/talos-guides/configuration/">👁️ https://www.talos.dev/v1.5/talos-guides/configuration/</a>
                 </li>
             </ol>
         </section>
@@ -169,7 +169,7 @@ talosctl config node $CONTROL_PLANE_IP</code></pre>
             <img height="500" src="images/Dashboard.png">
         </section>
         <section data-background-image="images/background.png">
-            <h5>etcd Backups</h5>
+            <h5><code>etcd</code> Backups</h5>
             <p>Am besten per cronjob!</p>
             <pre><code data-line-numbers="1|3|4">talosctl -n $CONTROL_PLANE_IP etcd snapshot db.snapshot
 
