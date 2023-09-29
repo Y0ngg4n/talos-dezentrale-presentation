@@ -103,7 +103,7 @@ https://$CONTROL_PLANE_IP:6443
             </ol>
             <pre style="width: 60%"><code data-line-numbers="1|2|3|4">talosctl apply-config
 --insecure
---nodes $CONTROL_PLANE_IP
+-n $CONTROL_PLANE_IP
 --file _out/controlplane.yaml</code></pre>
         </section>
         <section data-transition="none" data-background-image="images/background.png">
@@ -112,13 +112,13 @@ https://$CONTROL_PLANE_IP:6443
                 <li class="transparent"><p>Controllplane installieren:</p>
                     <pre><code>talosctl apply-config
 --insecure
---nodes $CONTROL_PLANE_IP
+-n $CONTROL_PLANE_IP
 --file _out/controlplane.yaml</code></pre>
                 </li>
                 <li class="fragment"><p>Worker installieren:</p>
                     <pre><code data-line-numbers="1|2|3|4">talosctl apply-config
 --insecure
---nodes $WORKER_IP
+-n $WORKER_IP
 --file _out/worker.yaml</code></pre>
                 </li>
             </ol>
@@ -148,12 +148,13 @@ talosctl config node $CONTROL_PLANE_IP</code></pre>
                     <pre><code>export TALOSCONFIG="_out/talosconfig"
 talosctl config endpoint $CONTROL_PLANE_IP
 talosctl config node $CONTROL_PLANE_IP</code></pre>
+                    (Nach export <code>-n</code> nicht mehr benötigt)
                 </li>
                 <li class="fragment fade-in-then-semi-out"><p><code>etcd</code> bootstrap:</p>
-                    <pre><code>talosctl bootstrap</code></pre>
+                    <pre><code>talosctl -n $CONTROL_PLANE_IP bootstrap</code></pre>
                 </li>
                 <li class="fragment fade-in-then-semi-out"><p><code>kubeconfig</code> speichern:</p>
-                    <pre><code>talosctl kubeconfig .</code></pre>
+                    <pre><code>talosctl -n $CONTROL_PLANE_IP kubeconfig .</code></pre>
                 </li>
             </ol>
             <h5 class="fragment fade-in-then-semi-out">Fertig 🥳</h5>
@@ -179,13 +180,13 @@ talosctl -n $CONTROL_PLANE_IP bootstrap
         </section>
         <section data-background-image="images/background.png">
             <h5>Kubernetes Updates</h5>
-            <pre><code data-line-numbers="1|2">talosctl --nodes $CONTROL_PLANE_IP
+            <pre><code data-line-numbers="1|2">talosctl -n $CONTROL_PLANE_IP
 upgrade-k8s --to 1.28.2</code></pre>
             <img height="500" src="images/UpgradeK8s.png">
         </section>
         <section data-background-image="images/background.png">
             <h5>Talos Updates</h5>
-            <pre><code data-line-numbers="1|2">talosctl upgrade --nodes NODE_IP_1,NODE_IP_2
+            <pre><code data-line-numbers="1|2">talosctl upgrade -n NODE_IP_1,NODE_IP_2
 --image ghcr.io/siderolabs/installer:v1.5.0</code></pre>
             <img src="images/UpgradeTalos.png">
         </section>
